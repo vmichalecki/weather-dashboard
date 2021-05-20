@@ -7,6 +7,7 @@ let temp = document.querySelector('.temp');
 let wind = document.querySelector('.wind');
 let humidity = document.querySelector('.humidity');
 let uvIndex = document.querySelector('.uv-index');
+let forecastContainer = document.querySelector('.forecast-container');
 
 
 // functions
@@ -58,12 +59,42 @@ function getUVI(lat, lon) {
         })
 }
 
+
+// date, icon, temp, wind, humidity
 function getFiveDay(nameValue) {
     fetch('https://api.openweathermap.org/data/2.5/forecast?q=chicago&appid=2acf688360ef2e4ae9e0ba6153c2285f&cnt=5')
         .then(response => response.json())
         .then(data => {
+            forecastContainer.innerHTML = "";
             data.list.forEach((lists, index) => {
+                if (index === 0) {
+                    return;
+                };
                 console.log(lists);
+                let forecastDate = new Date(lists.dt * 1000);
+                let options = { date };
+                let forecastIcon = lists.weather[0].icon;
+                let forecastTemp = lists.main.temp;
+                let forecastWind = lists.wind.speed;
+                let forecastHumidity = lists.main.humidity;
+                let forecastCard = document.createElement('div');
+                let cardDate = document.createElement('h3');
+                let cardIcon = document.createElement('p');
+                let cardTemp = document.createElement('p');
+                let cardWind = document.createElement('p');
+                let cardHumidity = document.createElement('p');
+                forecastContainer.append(forecastCard);
+                forecastCard.append(cardDate);
+                forecastCard.append(cardIcon);
+                forecastCard.append(cardTemp);
+                forecastCard.append(cardWind);
+                forecastCard.append(cardHumidity);
+                cardDate.innerHTML = new Intl.DateTimeFormat('en-US', options).format(forecastDate);
+                cardIcon.innerHTML = forecastIcon;
+                cardTemp.innerHTML = forecastTemp;
+                cardWind.innerHTML = forecastWind;
+                cardHumidity.innerHTML = forecastHumidity;
+                console.log(forecastIcon);
             })
         })
 };
