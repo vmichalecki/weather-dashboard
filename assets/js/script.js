@@ -14,15 +14,6 @@ let forecastContainer = document.querySelector('.forecast-container');
 // init
 // check local storage for the key (cities)
 // if present, dynamically create buttons with then button label as the city
-
-// getWeather
-// param: value of search box (city name)
-// call API with city name to get the coordinates lat and lon
-// find the lat and lon within the data and set them as variables
-// in the then of the call above, use the lat and lon to get current
-// in the then of the call
-// for five-day foreacst, loop through array of daily data
-
 // save the city the user searched to local storage, but check local storage for that city first, don't add if already there
 
 function getWeather() {
@@ -60,7 +51,6 @@ function getUVI(lat, lon) {
 }
 
 
-// date, icon, temp, wind, humidity
 function getFiveDay(nameValue) {
     fetch('https://api.openweathermap.org/data/2.5/forecast?q=chicago&appid=2acf688360ef2e4ae9e0ba6153c2285f&cnt=5')
         .then(response => response.json())
