@@ -18,7 +18,7 @@
     <container>
         <form>
             <label>Search for a city:</label>
-            <input id="cityName"></input>
+            <input id="citySearch" class="city-search"></input>
             <button>Search</button>
         </form>
         <button></button>
@@ -30,8 +30,15 @@
 
     <!-- second column on the right -->
     <container>
-        <div>
-            <!-- this contains city, icon, date, temp, wind, humidity, and UV index -->
+        <!-- this contains city, icon, date, temp, wind, humidity, and UV index -->
+        <div id="currentWeather" class="current-weather">
+            <h1>Current Weather</h1>
+            <h2 id="cityName" class="city-name"></h2>
+            <h4 id="date" class="date"></h4>
+            <h4 id="temp" class="temp"></h4>
+            <h4 id="wind" class="wind"></h4>
+            <h4 id="humidity" class="humidity"></h4>
+            <h4 id="uvIndex" class="uv-index"></h4>
         </div>
 
         <div>
@@ -40,7 +47,7 @@
         </div>
     </container>
 
-    <script src=".assets/js/script.js"></script>
+    <script src="./assets/js/script.js"></script>
 </body>
 
 </html>
