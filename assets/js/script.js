@@ -12,12 +12,6 @@ let searchBtn = document.querySelector('.search-btn');
 let cities = JSON.parse(localStorage.getItem('cities')) || [];
 let cityBtns = document.querySelector('.city-btns');
 
-// functions
-// init
-// check local storage for the key (cities)
-// if present, dynamically create buttons with then button label as the city
-// save the city the user searched to local storage, but check local storage for that city first, don't add if already there
-
 function init() {
     // check local storage for the key (cities) if present
     let citiesStorage = localStorage.getItem('cities');
@@ -26,14 +20,13 @@ function init() {
         cities = JSON.parse(citiesStorage);
         console.log(cities);
         renderCities();
-    }
+    };
 }
 
 function getCityName(event) {
     event.preventDefault();
     let citySearch = document.querySelector('.city-search').value;
     document.getElementById("citySearch").value = "";
-
     getWeather(citySearch);
     saveCitySearch(citySearch);
 }
@@ -79,6 +72,21 @@ function getUVI(lat, lon) {
         .then(response => response.json())
         .then(data => {
             let uviValue = data['current']['uvi'];
+            if (uviValue < 2) {
+                uvIndex.setAttribute('class', 'low');
+            }
+            else if (uviValue < 5) {
+                uvIndex.setAttribute('class', 'moderate')
+            }
+            else if (uviValue < 7) {
+                uvIndex.setAttribute('class', 'high');
+            }
+            else if (uviValue < 10) {
+                uvIndex.setAttribute('class', 'very-high');
+            }
+            else {
+                uvIndex.setAttribute('class', 'extreme')
+            }
             uvIndex.innerHTML = uviValue;
         })
 };
@@ -123,11 +131,12 @@ function getFiveDay(lat, lon) {
 };
 
 function saveCitySearch(citySearch) {
+    localStorage.setItem('cities', JSON.stringify(cities));
     let citiesStorage = localStorage.getItem('cities');
     if (!citiesStorage.includes(citySearch)) {
         cities.push(citySearch);
     }
-    localStorage.setItem('cities', JSON.stringify(cities));
+
     renderCities();
     console.log(cities);
 }
