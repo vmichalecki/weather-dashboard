@@ -35,6 +35,8 @@ function init() {
 function getCityName(event) {
     event.preventDefault();
     let citySearch = document.querySelector('.city-search').value;
+    document.getElementById("citySearch").value = "";
+
     getWeather(citySearch);
     saveCitySearch(citySearch);
 }
@@ -121,20 +123,30 @@ function getFiveDay(lat, lon) {
 };
 
 function saveCitySearch(citySearch) {
-    cities.push(citySearch);
+    let citiesStorage = localStorage.getItem('cities');
+    if (!citiesStorage.includes(citySearch)) {
+        cities.push(citySearch);
+    }
     localStorage.setItem('cities', JSON.stringify(cities));
     renderCities();
     console.log(cities);
 }
 
 function renderCities() {
-    let btn = document.createElement('button');
-    cityBtns.append(btn);
-    btn.innerHTML = cities;
+    cityBtns.textContent = '';
+    cities = cities.slice(Math.max(cities.length - 5, 0));
+    cities.forEach(city => {
+        //add class for event listener
+
+        let btn = document.createElement('button');
+        cityBtns.prepend(btn);
+        btn.innerHTML = city;
+    })
 }
 
-searchBtn.addEventListener('click', getCityName);
 
+searchBtn.addEventListener('click', getCityName);
+// click event for local storage btns
 // events
 // init (check local storage)
 // click on past city button to regenerate the forecast again (call the getWeather function with the label of button)
