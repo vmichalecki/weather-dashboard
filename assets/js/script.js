@@ -1,6 +1,5 @@
 // global variables
 let key = '41fb0d420da1aa1f169bc441322e7bd5';
-
 let cityName = document.querySelector('.city-name');
 let date = document.querySelector('.date');
 let icon = document.querySelector('.icon');
@@ -9,8 +8,9 @@ let wind = document.querySelector('.wind');
 let humidity = document.querySelector('.humidity');
 let uvIndex = document.querySelector('.uv-index');
 let forecastContainer = document.querySelector('.forecast-container');
-let searchButton = document.querySelector('.search-button');
-
+let searchBtn = document.querySelector('.search-btn');
+let cities = JSON.parse(localStorage.getItem('cities')) || [];
+let cityBtns = document.querySelector('.city-btns')
 
 // functions
 // init
@@ -18,10 +18,25 @@ let searchButton = document.querySelector('.search-button');
 // if present, dynamically create buttons with then button label as the city
 // save the city the user searched to local storage, but check local storage for that city first, don't add if already there
 
+function init() {
+    // check local storage for the key (cities) if present
+    let citiesStorage = localStorage.getItem('cities');
+    if (citiesStorage) {
+        // loop through local storage and create buttons with the button label as the city
+        cities = JSON.parse(citiesStorage);
+        console.log(cities);
+        cities.forEach(city => {
+            // make and append a button to the left panel
+        })
+    }
+    console.log('no data');
+}
+
 function getCityName(event) {
     event.preventDefault();
     let citySearch = document.querySelector('.city-search').value;
     getWeather(citySearch);
+    saveCitySearch(citySearch);
 }
 
 function getWeather(citySearch) {
@@ -105,11 +120,21 @@ function getFiveDay(lat, lon) {
         })
 };
 
+function saveCitySearch(citySearch) {
+    cities.push(citySearch);
+    localStorage.setItem('cities', JSON.stringify(cities));
+    renderCities();
+    console.log(cities);
+}
 
+function renderCities() {
+    let btn = document.createElement('button');
+    cityBtns.append(btn);
+    btn.innerHTML = cities;
+}
 
-searchButton.addEventListener('click', getCityName);
+searchBtn.addEventListener('click', getCityName);
 
 // events
 // init (check local storage)
-// search button to call the API and get the cream filling
 // click on past city button to regenerate the forecast again (call the getWeather function with the label of button)
