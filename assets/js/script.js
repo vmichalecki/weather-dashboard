@@ -10,7 +10,7 @@ let uvIndex = document.querySelector('.uv-index');
 let forecastContainer = document.querySelector('.forecast-container');
 let searchBtn = document.querySelector('.search-btn');
 let cities = JSON.parse(localStorage.getItem('cities')) || [];
-let cityBtns = document.querySelector('.city-btns')
+let cityBtns = document.querySelector('.city-btns');
 
 // functions
 // init
@@ -25,11 +25,8 @@ function init() {
         // loop through local storage and create buttons with the button label as the city
         cities = JSON.parse(citiesStorage);
         console.log(cities);
-        cities.forEach(city => {
-            // make and append a button to the left panel
-        })
+        renderCities();
     }
-    console.log('no data');
 }
 
 function getCityName(event) {
@@ -42,7 +39,10 @@ function getCityName(event) {
 }
 
 function getWeather(citySearch) {
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${citySearch}&units=imperial&appid=${key}`)
+    let city = citySearch.target || citySearch;
+    city = citySearch.target ?
+        city.getAttribute('data-city') : citySearch;
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${key}`)
         .then(response => response.json())
         .then(data => {
             let nameValue = data['name'];
@@ -59,7 +59,7 @@ function getWeather(citySearch) {
             wind.innerHTML = windValue;
             humidity.innerHTML = humidityValue;
             icon.setAttribute('src', weatherIcon);
-            getCoord(citySearch);
+            getCoord(city);
         })
 };
 
@@ -136,16 +136,21 @@ function renderCities() {
     cityBtns.textContent = '';
     cities = cities.slice(Math.max(cities.length - 5, 0));
     cities.forEach(city => {
-        //add class for event listener
-
         let btn = document.createElement('button');
         cityBtns.prepend(btn);
+        btn.setAttribute('data-city', city);
         btn.innerHTML = city;
     })
 }
 
 
 searchBtn.addEventListener('click', getCityName);
+cityBtns.addEventListener('click', () => getWeather(event));
+init();
+
+
+
+
 // click event for local storage btns
 // events
 // init (check local storage)
