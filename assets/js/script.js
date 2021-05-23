@@ -136,7 +136,6 @@ function saveCitySearch(citySearch) {
     if (!citiesStorage.includes(citySearch)) {
         cities.push(citySearch);
     }
-
     renderCities();
     console.log(cities);
 }
@@ -152,13 +151,9 @@ function renderCities() {
     })
 }
 
-
 searchBtn.addEventListener('click', getCityName);
 cityBtns.addEventListener('click', () => getWeather(event));
 init();
-
-
-
 
 // click event for local storage btns
 // events
