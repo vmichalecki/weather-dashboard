@@ -47,10 +47,11 @@ header, h1 {
 
 .my-card {
     border: solid 3px black;
-    width: 11em;
+    width: 12.42em;
     border-radius: 15px;
-    margin: .25em;
-    padding: .3em;
+    margin: .3em;
+    padding: .4em;
+    background-color: lightgray;
 }
 
 form {
@@ -61,4 +62,8 @@ form {
 .city-search {
     width: 100%;
     margin-bottom: .5em;
+}
+
+.index-bar {
+    width: max-content;
 }

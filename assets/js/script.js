@@ -13,10 +13,8 @@ let cities = JSON.parse(localStorage.getItem('cities')) || [];
 let cityBtns = document.querySelector('.city-btns');
 
 function init() {
-    // check local storage for the key (cities) if present
     let citiesStorage = localStorage.getItem('cities');
     if (citiesStorage) {
-        // loop through local storage and create buttons with the button label as the city
         cities = JSON.parse(citiesStorage);
         console.log(cities);
         renderCities();
@@ -133,10 +131,7 @@ function getFiveDay(lat, lon) {
         })
 };
 
-
-
 function saveCitySearch(citySearch) {
-    // let citiesStorage = localStorage.getItem('cities');
     if (!cities.includes(citySearch)) {
         cities.push(citySearch);
     }
@@ -161,8 +156,3 @@ function renderCities() {
 searchBtn.addEventListener('click', getCityName);
 cityBtns.addEventListener('click', () => getWeather(event));
 init();
-
-// click event for local storage btns
-// events
-// init (check local storage)
-// click on past city button to regenerate the forecast again (call the getWeather function with the label of button)
