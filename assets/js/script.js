@@ -48,9 +48,9 @@ function getWeather(citySearch) {
             cityName.innerHTML = nameValue;
             date.innerHTML = new Intl.DateTimeFormat('en-US', options).format(dateValue);
             icon.innerHTML = weatherIcon;
-            temp.innerHTML = tempValue;
-            wind.innerHTML = windValue;
-            humidity.innerHTML = humidityValue;
+            temp.innerHTML = `Temperature: ${tempValue}°`;
+            wind.innerHTML = `Wind: ${windValue} mph`;
+            humidity.innerHTML = `Humidity: ${humidityValue}%`;
             icon.setAttribute('src', weatherIcon);
             getCoord(city);
         })
@@ -87,7 +87,7 @@ function getUVI(lat, lon) {
             else {
                 uvIndex.setAttribute('class', 'extreme')
             }
-            uvIndex.innerHTML = uviValue;
+            uvIndex.innerHTML = `UV Index: ${uviValue}`;
         })
 };
 
@@ -114,8 +114,11 @@ function getFiveDay(lat, lon) {
                 let cardWind = document.createElement('p');
                 let cardHumidity = document.createElement('p');
                 forecastContainer.append(forecastCard);
+                forecastCard.setAttribute('class', 'card');
+                forecastCard.setAttribute('class', 'my-card');
                 cardIcon.setAttribute('src', forecastIcon);
                 cardIcon.setAttribute('alt', forecastIconDesc);
+                cardIcon.setAttribute('class', 'card-icon');
                 forecastCard.append(cardDate);
                 forecastCard.append(cardIcon);
                 forecastCard.append(cardTemp);
@@ -123,19 +126,21 @@ function getFiveDay(lat, lon) {
                 forecastCard.append(cardHumidity);
                 cardDate.innerHTML = new Intl.DateTimeFormat('en-US', options).format(forecastDate);
                 cardIcon.innerHTML = forecastIcon;
-                cardTemp.innerHTML = forecastTemp;
-                cardWind.innerHTML = forecastWind;
-                cardHumidity.innerHTML = forecastHumidity;
+                cardTemp.innerHTML = `Temperature: ${forecastTemp}°`;
+                cardWind.innerHTML = `Wind: ${forecastWind} mph`;
+                cardHumidity.innerHTML = `Humidity: ${forecastHumidity}%`;
             })
         })
 };
 
+
+
 function saveCitySearch(citySearch) {
-    localStorage.setItem('cities', JSON.stringify(cities));
-    let citiesStorage = localStorage.getItem('cities');
-    if (!citiesStorage.includes(citySearch)) {
+    // let citiesStorage = localStorage.getItem('cities');
+    if (!cities.includes(citySearch)) {
         cities.push(citySearch);
     }
+    localStorage.setItem('cities', JSON.stringify(cities));
     renderCities();
     console.log(cities);
 }
@@ -146,7 +151,9 @@ function renderCities() {
     cities.forEach(city => {
         let btn = document.createElement('button');
         cityBtns.prepend(btn);
+        btn.setAttribute('class', 'btn btn-outline-secondary btn-block');
         btn.setAttribute('data-city', city);
+
         btn.innerHTML = city;
     })
 }

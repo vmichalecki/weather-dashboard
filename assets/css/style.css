@@ -1,3 +1,7 @@
+* {
+    font-family: 'Mukta Vaani', sans-serif;
+}
+
 .low {
     background: green;
 }
@@ -16,4 +20,45 @@
 
 .extreme {
     background: purple;
+}
+
+.card-icon {
+    height: 3.5em;
+    width: 3.5em;
+}
+
+header {
+    width: 100%;
+    font-size: 3.5em;
+    padding: .5em;
+    background-image: linear-gradient(to bottom right,  gray, transparent);
+    margin-bottom: .5em;
+}
+
+header, h1 {
+    font-family: 'MuseoModerno', cursive;
+}
+
+.current-weather-container {
+    border: solid 3px black;
+    padding: 1em;
+    border-radius: 15px;
+}
+
+.my-card {
+    border: solid 3px black;
+    width: 11em;
+    border-radius: 15px;
+    margin: .25em;
+    padding: .3em;
+}
+
+form {
+    margin-bottom: 1em;
+    justify-content: center;
+}
+
+.city-search {
+    width: 100%;
+    margin-bottom: .5em;
 }
