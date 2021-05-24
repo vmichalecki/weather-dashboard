@@ -12,6 +12,7 @@ let searchBtn = document.querySelector('.search-btn');
 let cities = JSON.parse(localStorage.getItem('cities')) || [];
 let cityBtns = document.querySelector('.city-btns');
 
+// loads the previous five cities searched from local storage as clickable buttons
 function init() {
     let citiesStorage = localStorage.getItem('cities');
     if (citiesStorage) {
@@ -21,6 +22,7 @@ function init() {
     };
 }
 
+// gets the user's input and empties the search box
 function getCityName(event) {
     event.preventDefault();
     let citySearch = document.querySelector('.city-search').value;
@@ -29,6 +31,7 @@ function getCityName(event) {
     saveCitySearch(citySearch);
 }
 
+// gets the current weather for searched city
 function getWeather(citySearch) {
     let city = citySearch.target || citySearch;
     city = citySearch.target ?
@@ -54,6 +57,7 @@ function getWeather(citySearch) {
         })
 };
 
+// gets the lat and lon coordinates needed for the UV index and forecast information
 function getCoord(citySearch) {
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${citySearch}&units=imperial&appid=${key}`)
         .then(response => response.json())
@@ -65,6 +69,7 @@ function getCoord(citySearch) {
         })
 };
 
+// gets the UV index and assigns colors based on the the value
 function getUVI(lat, lon) {
     fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&exclude=minutely,hourly,daily,alerts&appid=${key}`)
         .then(response => response.json())
@@ -89,6 +94,7 @@ function getUVI(lat, lon) {
         })
 };
 
+// gets and renders the five-day weather forecast
 function getFiveDay(lat, lon) {
     fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&exclude=current,minutely,hourly,alerts&appid=${key}`)
         .then(response => response.json())
@@ -131,6 +137,7 @@ function getFiveDay(lat, lon) {
         })
 };
 
+// saves the city name in local storage
 function saveCitySearch(citySearch) {
     if (!cities.includes(citySearch)) {
         cities.push(citySearch);
@@ -140,6 +147,7 @@ function saveCitySearch(citySearch) {
     console.log(cities);
 }
 
+// renders the past city names to buttons
 function renderCities() {
     cityBtns.textContent = '';
     cities = cities.slice(Math.max(cities.length - 5, 0));
@@ -153,6 +161,7 @@ function renderCities() {
     })
 }
 
+// event listeners
 searchBtn.addEventListener('click', getCityName);
 cityBtns.addEventListener('click', () => getWeather(event));
 init();
